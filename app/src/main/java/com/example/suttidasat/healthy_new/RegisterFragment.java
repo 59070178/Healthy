@@ -12,7 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.suttidasat.healthy_new.weight.WeightFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class RegisterFragment extends Fragment {
+
+    private FirebaseAuth fbAuth;
 
     @Nullable
     @Override
@@ -26,7 +35,10 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        fbAuth = FirebaseAuth.getInstance();
         initRegisterBtn();
+
     }
 
     void initRegisterBtn(){
@@ -34,67 +46,84 @@ public class RegisterFragment extends Fragment {
         _regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText _regUserId = getView().findViewById(R.id.reg_userId);
-                EditText _regName = getView().findViewById(R.id.reg_name);
-                EditText _regAge = getView().findViewById(R.id.reg_age);
+                EditText _regEmail = getView().findViewById(R.id.reg_email);
                 EditText _regPsw = getView().findViewById(R.id.reg_password);
+                EditText _regRePsw = getView().findViewById(R.id.reg_rePassword);
 
-                String _userIdStr = _regUserId.getText().toString();
+                String _regEmailStr = _regEmail.getText().toString();
                 String _passwordStr = _regPsw.getText().toString();
-                String _regNameStr = _regName.getText().toString();
-                String __regAgeStr = _regAge.getText().toString();
+                String _regRePswStr = _regRePsw.getText().toString();
 
-                if (_passwordStr.isEmpty()){
+                if (_passwordStr.isEmpty() || _regEmailStr.isEmpty() ||_regRePswStr.isEmpty()) {
 
                     Toast.makeText(
                             getActivity(),
                             "กรุณาระบุข้อมูลให้ครบถ้วน",
                             Toast.LENGTH_SHORT
                     ).show();
-                    Log.d("USER","FIELD Password IS EMPTY" );
+                    Log.d("USER","Some FIELD IS EMPTY" );
 
-                }else if (__regAgeStr.isEmpty()){
+                } else if (!_passwordStr.equals(_regRePswStr)){
                     Toast.makeText(
                             getActivity(),
-                            "กรุณาระบุข้อมูลให้ครบถ้วน",
+                            "Password not equals Re-Password",
                             Toast.LENGTH_SHORT
                     ).show();
-                    Log.d("USER","FIELD Age IS EMPTY" );
-                }else if ( _regNameStr.isEmpty()){
+                    Log.d("USER","Password not equals Re-Password" );
+                } else if (_passwordStr.length() < 6){
                     Toast.makeText(
                             getActivity(),
-                            "กรุณาระบุข้อมูลให้ครบถ้วน",
+                            "Password should more than 5",
                             Toast.LENGTH_SHORT
                     ).show();
-                    Log.d("USER","FIELD Name IS EMPTY" );
-                }else if ( _userIdStr.isEmpty()){
-                    Toast.makeText(
-                            getActivity(),
-                            "กรุณาระบุข้อมูลให้ครบถ้วน",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    Log.d("USER","FIELD User Id IS EMPTY" );
-                }
-                else if (_userIdStr.equals("admin")){
-                    Toast.makeText(
-                            getActivity(),
-                            "user นี้มีอยู่ในระบบแล้ว",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    Log.d("USER","USER ALREADY EXIST" );
+                    Log.d("USER","Password should more than 5" );
                 }else {
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, new BMIFragment())
-                            .addToBackStack(null)
-                            .commit();
-                    Log.d("USER", "GOTO BMI");
+
+
+                    fbAuth.createUserWithEmailAndPassword(_regEmailStr,_passwordStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+                            sendVerifiedEmail(authResult.getUser());
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
+                                    ,Toast.LENGTH_SHORT)
+                                    .show();
+
+                        }
+                    });
                 }
+            }
+        });
+    }
+
+    /// return user that finish login
+
+    void sendVerifiedEmail(FirebaseUser _user){
+        _user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new LoginFragment())
+                        .commit();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
             }
         });
-
-
     }
+
+
 }
 

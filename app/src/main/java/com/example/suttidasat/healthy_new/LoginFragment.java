@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
 
 
     @Nullable
@@ -52,18 +56,6 @@ public class LoginFragment extends Fragment {
                             Toast.LENGTH_SHORT
                     ).show();
                     Log.d("USER","USER OR PASSWORD IS EMPTY" );
-                } else if(
-                        _userIdStr.equals("admin") && _passwordStr.equals("admin")
-                        ){
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.main_view, new BMIFragment())
-                            .addToBackStack(null)
-                            .commit();
-                    Log.d("USER", "GOTO BMI");
-
-                } else {
-                    Log.d("USER", "INVALID USER NAME OR PASSWORD");
                 }
 
             }

@@ -33,9 +33,8 @@ public class WeightAdapter extends ArrayAdapter {
                         @Nullable View convertView,
                         @NonNull ViewGroup parent) {
 
+        View listItem = LayoutInflater.from(context).inflate(R.layout.weight_item,parent,false);
 
-
-        View listItem = LayoutInflater.from(context).inflate(R.layout.show_weight,parent,false);
         TextView _shDate = (TextView) listItem.findViewById(R.id.show_date);
         TextView _shWeight = (TextView) listItem.findViewById(R.id.show_weight);
         TextView _shStatus = (TextView) listItem.findViewById(R.id.show_status);
@@ -45,6 +44,7 @@ public class WeightAdapter extends ArrayAdapter {
         _shDate.setText(_w.getDate());
         _shWeight.setText(_w.getWeight()+"    ");
         _shStatus.setText(_w.getStatus());
+
         return listItem;
     }
 }

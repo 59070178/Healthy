@@ -30,7 +30,7 @@ public class MenuFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         _menu.add("BMI");
         _menu.add("Weight");
-        _menu.add("Setup");
+        _menu.add("Sing Out");
 
         final ArrayAdapter<String> _menuAdapter = new ArrayAdapter<>(
                 getActivity(),

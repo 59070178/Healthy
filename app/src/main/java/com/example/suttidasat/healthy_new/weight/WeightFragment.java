@@ -46,7 +46,7 @@ public class WeightFragment extends Fragment {
 
          _weightAdapter = new WeightAdapter(
                 getActivity(),
-                R.layout.show_weight,
+                R.layout.weight_item,
                 weights
         );
         _weightList.setAdapter(_weightAdapter);

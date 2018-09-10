@@ -22,33 +22,58 @@
         android:orientation="vertical"
         android:padding="60dp">
 
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/user_id"
-            android:drawableLeft="@drawable/user"
-            android:id="@+id/reg_userId"/>
+            android:hint="@string/email"
+            android:drawableLeft="@drawable/mail"
+            android:id="@+id/reg_email"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/name"
-            android:drawableLeft="@drawable/name"
-            android:id="@+id/reg_name"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/age"
-            android:drawableLeft="@drawable/age"
-            android:id="@+id/reg_age"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:drawableLeft="@drawable/psw"
-            android:id="@+id/reg_password"/>
+            android:id="@+id/reg_password"
+            android:inputType="textPassword"/>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/repassword"
+            android:drawableLeft="@drawable/psw"
+            android:id="@+id/reg_rePassword"
+            android:inputType="textPassword"/>
+
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/user_id"-->
+            <!--android:drawableLeft="@drawable/user"-->
+            <!--android:id="@+id/reg_userId"/>-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/name"-->
+            <!--android:drawableLeft="@drawable/name"-->
+            <!--android:id="@+id/reg_name"/>-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/age"-->
+            <!--android:drawableLeft="@drawable/age"-->
+            <!--android:id="@+id/reg_age"/>-->
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/password"-->
+            <!--android:drawableLeft="@drawable/psw"-->
+            <!--android:id="@+id/reg_password"/>-->
 
         <Button
             android:layout_width="match_parent"
