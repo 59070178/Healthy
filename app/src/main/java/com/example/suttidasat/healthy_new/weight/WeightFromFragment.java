@@ -13,8 +13,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suttidasat.healthy_new.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class WeightFromFragment extends Fragment {
+
+    FirebaseFirestore firestore;
+    FirebaseAuth auth;
 
     @Nullable
     @Override
@@ -25,6 +32,10 @@ public class WeightFromFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+
         initRecordBtn();
         initBackBtn();
     }
@@ -69,13 +80,41 @@ public class WeightFromFragment extends Fragment {
                 }
                 else {
 
-                    int _weightInt = Integer.parseInt(_weightStr);
-                    weightFragment.addWeight(new Weight(_dateStr, _weightInt, ""));
-                    Toast.makeText(
-                            getActivity(),
-                            "Record Success",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    String uid = auth.getCurrentUser().getUid();
+
+                    Weight _data = new Weight(
+                            _dateStr,
+                            Integer.valueOf(_weightStr),
+                            "UP"
+                    );
+
+                    firestore.collection("myfitness")
+                            .document(uid)
+                            .collection("Weight")
+                            .document(_dateStr)
+                    .set(_data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            Toast.makeText(
+                                    getActivity(),
+                                    "Success , Go To Weight",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            Log.d("LOGIN", "Success");
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.main_view, new WeightFragment())
+                                    .commit();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
 
                 }
 

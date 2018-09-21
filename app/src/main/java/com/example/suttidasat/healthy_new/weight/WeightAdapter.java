@@ -19,8 +19,9 @@ public class WeightAdapter extends ArrayAdapter {
     List<Weight> WeightList = new ArrayList<Weight>();
     Context context;
 
-    public WeightAdapter(Context context, int resouce, List<Weight> objects){
-        super(context, resouce, objects);
+
+    public WeightAdapter(Context context, int resource, List<Weight> objects) {
+        super(context, resource, objects);
         this.WeightList = objects;
         this.context = context;
     }
@@ -43,8 +44,20 @@ public class WeightAdapter extends ArrayAdapter {
 
         _shDate.setText(_w.getDate());
         _shWeight.setText(_w.getWeight()+"    ");
-        _shStatus.setText(_w.getStatus());
+//        _shStatus.setText(_w.getStatus());
 
+        if (position > 0) {
+            Weight _prevRow = WeightList.get(position - 1);
+            if (_prevRow.weight > _w.weight) {
+                _shStatus.setText("DOWN");
+            } else if (_w.weight > _prevRow.weight) {
+                _shStatus.setText("UP");
+            }else{
+                _shStatus.setText("");
+            }
+        }else {
+            _shStatus.setText(" ");
+        }
         return listItem;
     }
 }

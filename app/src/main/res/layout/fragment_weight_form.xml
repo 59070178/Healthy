@@ -3,47 +3,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/back_to_weight"
+
+
+    <TextView
+        android:text="WEIGHT FORM"
+        android:textColor="#000000"
+        android:textSize="26dp"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Back"
-        android:layout_gravity="center"></Button>
+        android:id="@+id/textView" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <LinearLayout
+            android:padding="35dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="35dp">
+            android:weightSum="1">
 
-
-            <EditText
-                android:id="@+id/form_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/height"
-                android:hint="วันที่ชั่ง" />
-
-            <EditText
-                android:id="@+id/form_weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/weight"
-                android:hint="น้ำหนัก (kg)" />
 
             <Button
-                android:id="@+id/record"
+                android:text="BACK  "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="บันทึก"></Button>
+                android:id="@+id/back_to_weight"
+                />
 
-        </LinearLayout></ScrollView>
+            <EditText
+                android:drawableLeft="@drawable/height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="วันที่ชั่ง"
+                android:ems="10"
+                android:id="@+id/form_date" />
+
+
+
+            <EditText
+                android:drawableLeft="@drawable/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="น้ำหนัก (kg)"
+                android:ems="10"
+                android:id="@+id/form_weight" />
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:text="SAVE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/record"
+                />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
 
 
 

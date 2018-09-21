@@ -84,7 +84,14 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
+
                             sendVerifiedEmail(authResult.getUser());
+                            Toast.makeText(
+                                    getActivity(),
+                                    "Register is success",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            Log.d("Register","Success" );
 
 
                         }
@@ -95,6 +102,8 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
                                     ,Toast.LENGTH_SHORT)
                                     .show();
+
+                            Log.d("Register","Fail" );
 
                         }
                     });
@@ -110,8 +119,11 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
 
+                fbAuth.getInstance().signOut();
+                Log.d("LOGIN", "Send verify e-mail successful");
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack(null)
                         .replace(R.id.main_view, new LoginFragment())
                         .commit();
 
@@ -119,6 +131,12 @@ public class RegisterFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
+                        ,Toast.LENGTH_SHORT)
+                        .show();
+
+                Log.d("LOGIN", "Send vefiry e-mail failure");
 
             }
         });

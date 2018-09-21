@@ -11,14 +11,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.suttidasat.healthy_new.MenuFragment;
 import com.example.suttidasat.healthy_new.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class WeightFragment extends Fragment {
 
     ArrayList<Weight> weights = new ArrayList<>();
-    WeightAdapter _weightAdapter;
+    FirebaseFirestore firestore;
+    FirebaseAuth auth;
 
     @Nullable
     @Override
@@ -26,33 +34,46 @@ public class WeightFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_weight, container,false);
     }
 
-//    private ListView listView;
-//    private WeightAdapter wAdapter;
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        weights.add(new Weight("01 Jan 2018", 63, "UP"));
-        weights.add(new Weight("02 Jan 2018", 64, "DOWN"));
-        weights.add(new Weight("03 Jan 2018", 63, "UP"));
-
-
 
         ListView _weightList =  (ListView) getView().findViewById(R.id.weight_list);
 
-//        _weightAdapter = new WeightAdapter(this,weights);
 
-         _weightAdapter = new WeightAdapter(
+        final WeightAdapter _weightAdapter = new WeightAdapter(
                 getActivity(),
                 R.layout.weight_item,
                 weights
         );
+
         _weightList.setAdapter(_weightAdapter);
 
 
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        //GET VALUDE FROM FIREBASE
+        String user = auth.getCurrentUser().getUid();
+        firestore.collection("myfitness").document(user)
+                .collection("Weight")
+                .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        weights.clear();
+                        for (DocumentSnapshot d: queryDocumentSnapshots.getDocuments()){
+                            weights.add(d.toObject(Weight.class));
+                        }
+                           _weightAdapter.notifyDataSetChanged();
+
+                    }
+
+                });
         initAddWeightBtn();
+        initBackMenuBtn();
 
     }
 
@@ -73,7 +94,19 @@ public class WeightFragment extends Fragment {
             }
         });
     }
-     void addWeight(Weight weight){
-        weights.add(weight);
+    void initBackMenuBtn() {
+        Button _backBtn = (Button) getView().findViewById(R.id.back_to_menu);
+        _backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new MenuFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO MENU");
+            }
+        });
     }
+
 }

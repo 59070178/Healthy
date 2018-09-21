@@ -13,10 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.suttidasat.healthy_new.weight.WeightFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class MenuFragment extends Fragment {
+
+    private FirebaseAuth firebaseAuth;
 
     @Nullable
     @Override
@@ -28,6 +31,9 @@ public class MenuFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         _menu.add("BMI");
         _menu.add("Weight");
         _menu.add("Sing Out");
@@ -63,6 +69,17 @@ public class MenuFragment extends Fragment {
                             .commit();
 
                     Log.d("USER", "GOTO Weight");
+                }else {
+                    firebaseAuth.signOut();
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, new LoginFragment())
+
+                            .commit();
+
+                    Log.d("USER", "GOTO Login Page");
+
                 }
 
 

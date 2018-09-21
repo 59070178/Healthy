@@ -1,5 +1,6 @@
 package com.example.suttidasat.healthy_new;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +14,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suttidasat.healthy_new.weight.WeightFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
 
 
     @Nullable
@@ -34,8 +39,21 @@ public class LoginFragment extends Fragment {
             (@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+            Log.d("USER", "USER ALREADY LOG IN");
+            Log.d("USER", "GOTO Menu");
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_view,new MenuFragment())
+                    .commit();
+            return;
+        }
+
         initLoginBtn();
         initRegisterBtn();
+
+
+
 
     }
 
@@ -49,6 +67,8 @@ public class LoginFragment extends Fragment {
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
                 String _userIdStr = _userId.getText().toString();
                 String _passwordStr = _password.getText().toString();
+
+
                 if (_userIdStr.isEmpty() || _passwordStr.isEmpty()){
                     Toast.makeText(
                             getActivity(),
@@ -56,11 +76,46 @@ public class LoginFragment extends Fragment {
                             Toast.LENGTH_SHORT
                     ).show();
                     Log.d("USER","USER OR PASSWORD IS EMPTY" );
+
                 }
 
+
+                else {
+
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr,_passwordStr)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+
+                                    if(authResult.getUser().isEmailVerified()){
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.main_view,new MenuFragment())
+                                                .commit();
+                                        Log.d("USER", "GOTO Menu");
+                                    }else{
+                                        Log.d("USER", "EMAIL IS NOT VERIFIED");
+                                        Toast.makeText(getContext(),"EMAIL IS NOT VERIFIED",Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            Log.d("LOGIN", "Email or Password invalid");
+                            Toast.makeText(
+                                    getActivity(),
+                                    "Email or Password invalid",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                        }
+                    });
+
+                }
             }
         });
-
 
     }
 
@@ -74,7 +129,16 @@ public class LoginFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.main_view, new RegisterFragment())
                         .commit();
+                Toast.makeText(
+                        getActivity(),
+                        "go to register",
+                        Toast.LENGTH_SHORT
+                ).show();
+
             }
         });
     }
+
+
+
 }
