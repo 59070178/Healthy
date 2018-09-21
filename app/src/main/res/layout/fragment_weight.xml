@@ -6,37 +6,30 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="Weight"
-        android:textColor="#000000"
-        android:textSize="26dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <Button
+            android:id="@+id/add_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/addWeight" />
+
+        <ListView
+            android:id="@+id/weight_list"
+            android:layout_width="match_parent"
+            android:layout_height="417dp"
+            android:layout_marginTop="10dp"></ListView>
 
 
-    <Button
-        android:id="@+id/add_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Weight" />
-
-    <ListView
-        android:id="@+id/weight_list"
-        android:layout_width="333dp"
-        android:layout_height="440dp"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="63dp"></ListView>
+    </LinearLayout>
 
 
-    <Button
-        android:id="@+id/back_to_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:gravity="bottom"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="519dp" />
+
 
 </android.support.constraint.ConstraintLayout>

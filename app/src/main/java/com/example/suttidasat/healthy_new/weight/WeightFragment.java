@@ -73,7 +73,7 @@ public class WeightFragment extends Fragment {
 
                 });
         initAddWeightBtn();
-        initBackMenuBtn();
+//        initBackMenuBtn();
 
     }
 
@@ -94,19 +94,19 @@ public class WeightFragment extends Fragment {
             }
         });
     }
-    void initBackMenuBtn() {
-        Button _backBtn = (Button) getView().findViewById(R.id.back_to_menu);
-        _backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_view,new MenuFragment())
-                        .addToBackStack(null)
-                        .commit();
-                Log.d("USER", "GOTO MENU");
-            }
-        });
-    }
+//    void initBackMenuBtn() {
+//        Button _backBtn = (Button) getView().findViewById(R.id.back_to_menu);
+//        _backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.main_view,new MenuFragment())
+//                        .addToBackStack(null)
+//                        .commit();
+//                Log.d("USER", "GOTO MENU");
+//            }
+//        });
+//    }
 
 }

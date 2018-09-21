@@ -40,12 +40,21 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(FirebaseAuth.getInstance().getCurrentUser()!= null){
+
+
             Log.d("USER", "USER ALREADY LOG IN");
             Log.d("USER", "GOTO Menu");
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_view,new MenuFragment())
                     .commit();
+
+            Toast.makeText(
+                    getActivity(),
+                    "Login Success , Go to menu",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             return;
         }
 
@@ -82,41 +91,49 @@ public class LoginFragment extends Fragment {
 
                 else {
 
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr,_passwordStr)
-                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
 
-                                    if(authResult.getUser().isEmailVerified()){
-                                        getActivity().getSupportFragmentManager()
-                                                .beginTransaction()
-                                                .replace(R.id.main_view,new MenuFragment())
-                                                .commit();
-                                        Log.d("USER", "GOTO Menu");
-                                    }else{
-                                        Log.d("USER", "EMAIL IS NOT VERIFIED");
-                                        Toast.makeText(getContext(),"EMAIL IS NOT VERIFIED",Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr,_passwordStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                            Log.d("LOGIN", "Email or Password invalid");
-                            Toast.makeText(
-                                    getActivity(),
-                                    "Email or Password invalid",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                        public void onSuccess(AuthResult authResult) {
+                            sendVeriFiedEmail(authResult.getUser());
 
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("USER", "INVALID USER OR PASSWORD");
+                            Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
                     });
-
-                }
-            }
+                }}
         });
 
+    }
+    void sendVeriFiedEmail(final FirebaseUser _user) {
+        _user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //USER CONFIRM EMAIL
+                if(_user.isEmailVerified()){
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view,new MenuFragment())
+                            .commit();
+                    Log.d("USER", "GOTO Menu");
+                }else{
+                    Log.d("USER", "EMAIL IS NOT VERIFIED");
+                    Toast.makeText(getContext(),"EMAIL IS NOT VERIFIED",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
+                        ,Toast.LENGTH_SHORT)
+                        .show();
+                Log.d("SYSTEM", "ERROR = " + e.getMessage());
+            }
+        });
     }
 
     void initRegisterBtn() {
