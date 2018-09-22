@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.suttidasat.healthy_new.weight.WeightFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +61,9 @@ public class MenuFragment extends Fragment {
                             .commit();
 
                     Log.d("USER", "GOTO BMI");
+                    Toast.makeText
+                            (getContext(),"GO TO BMI",Toast.LENGTH_SHORT)
+                            .show();
 
                 }else if (_menu.get(i).equals("Weight")){
                     getActivity().getSupportFragmentManager()
@@ -69,6 +73,9 @@ public class MenuFragment extends Fragment {
                             .commit();
 
                     Log.d("USER", "GOTO Weight");
+                    Toast.makeText
+                            (getContext(),"GO TO MENU",Toast.LENGTH_SHORT)
+                            .show();
                 }else {
                     firebaseAuth.signOut();
 
@@ -79,6 +86,9 @@ public class MenuFragment extends Fragment {
                             .commit();
 
                     Log.d("USER", "GOTO Login Page");
+                    Toast.makeText
+                            (getContext(),"SING OUT SUCCESS, GO TO LOGIN",Toast.LENGTH_SHORT)
+                            .show();
 
                 }
 

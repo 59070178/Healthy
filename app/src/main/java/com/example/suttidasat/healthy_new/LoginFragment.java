@@ -61,9 +61,6 @@ public class LoginFragment extends Fragment {
         initLoginBtn();
         initRegisterBtn();
 
-
-
-
     }
 
     void initLoginBtn() {
@@ -92,27 +89,28 @@ public class LoginFragment extends Fragment {
                 else {
 
 
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr,_passwordStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(_userIdStr,_passwordStr)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            sendVeriFiedEmail(authResult.getUser());
+                            chkIsVeriFied(authResult.getUser());
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            FirebaseAuth.getInstance().signOut();
                             Log.d("USER", "INVALID USER OR PASSWORD");
                             Toast.makeText(getContext(),"ERROR = "+e.getMessage(),Toast.LENGTH_SHORT).show();
+
                         }
                     });
                 }}
         });
 
     }
-    void sendVeriFiedEmail(final FirebaseUser _user) {
-        _user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+    void chkIsVeriFied(final FirebaseUser _user) {
+
                 //USER CONFIRM EMAIL
                 if(_user.isEmailVerified()){
                     getActivity().getSupportFragmentManager()
@@ -120,20 +118,19 @@ public class LoginFragment extends Fragment {
                             .replace(R.id.main_view,new MenuFragment())
                             .commit();
                     Log.d("USER", "GOTO Menu");
+                    Toast.makeText
+                            (getContext(),"EMAIL IS VERIFIED , GO TO MENU",Toast.LENGTH_SHORT)
+                            .show();
                 }else{
+                    FirebaseAuth.getInstance().signOut();
                     Log.d("USER", "EMAIL IS NOT VERIFIED");
-                    Toast.makeText(getContext(),"EMAIL IS NOT VERIFIED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText
+                            (getContext(),"EMAIL IS NOT VERIFIED",Toast.LENGTH_SHORT)
+                            .show();
+
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
-                        ,Toast.LENGTH_SHORT)
-                        .show();
-                Log.d("SYSTEM", "ERROR = " + e.getMessage());
-            }
-        });
+
+
     }
 
     void initRegisterBtn() {

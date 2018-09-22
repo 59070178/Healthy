@@ -29,7 +29,7 @@
                 android:drawableLeft="@drawable/user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_id"
+                android:hint="E-mail"
                 android:layout_gravity="center"
                 android:id="@+id/login_userid"
                 />

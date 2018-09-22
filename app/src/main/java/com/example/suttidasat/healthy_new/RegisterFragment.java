@@ -126,6 +126,9 @@ public class RegisterFragment extends Fragment {
                         .addToBackStack(null)
                         .replace(R.id.main_view, new LoginFragment())
                         .commit();
+                Toast.makeText
+                        (getContext(),"Please Verify Your E-Mail",Toast.LENGTH_SHORT)
+                        .show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {

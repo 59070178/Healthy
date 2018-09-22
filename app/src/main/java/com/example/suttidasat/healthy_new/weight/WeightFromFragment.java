@@ -50,6 +50,9 @@ public class WeightFromFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.main_view, new WeightFragment())
                         .commit();
+                Toast.makeText(getActivity(),"Go To Weight"
+                        ,Toast.LENGTH_SHORT)
+                        .show();
             }
         });
     }
@@ -71,6 +74,7 @@ public class WeightFromFragment extends Fragment {
                 WeightFragment weightFragment = new WeightFragment();
 
                 if (_dateStr.isEmpty() || _weightStr.isEmpty()){
+                    Log.d("User","Please Fill Date and Weight");
 
                     Toast.makeText(
                             getActivity(),
@@ -112,6 +116,11 @@ public class WeightFromFragment extends Fragment {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+
+                            Toast.makeText(getActivity(),"ERROR = " + e.getMessage()
+                                    ,Toast.LENGTH_SHORT)
+                                    .show();
+                            Log.d("Firebase","Add Data To Firebase Fail");
 
                         }
                     });

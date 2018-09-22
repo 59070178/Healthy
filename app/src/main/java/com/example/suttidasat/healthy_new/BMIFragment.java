@@ -43,10 +43,9 @@ public class BMIFragment extends Fragment {
                 String _heightStr = _heigth.getText().toString();
                 String _weightStr = _weight.getText().toString();
 
-                int _heightInt = Integer.parseInt(_heightStr);
-                int _weightInt = Integer.parseInt(_weightStr);
+                float _weightFlo = Float.parseFloat(_weightStr);
                 float _heightFloat = Float.parseFloat(_heightStr);
-                float _result = _weightInt/((_heightFloat/10)*(_heightFloat/10));
+                float _result = _weightFlo/((_heightFloat/10)*(_heightFloat/10));
 
                 if (_heightStr.isEmpty() || _weightStr.isEmpty()){
                     Toast.makeText(
@@ -61,6 +60,12 @@ public class BMIFragment extends Fragment {
                     TextView ans = getView().findViewById(R.id.ans_bmi);
                     ans.setText(_result + "");
                     Log.d("user","BMI IS VALUE");
+                    Toast.makeText(
+
+                            getActivity(),
+                            "Your BMI",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
 
             }
@@ -77,6 +82,12 @@ public class BMIFragment extends Fragment {
                         .replace(R.id.main_view, new MenuFragment())
                         .commit();
                 Log.d("USER", "GOTO MENU");
+                Toast.makeText(
+
+                        getActivity(),
+                        "Go To Menu",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
 

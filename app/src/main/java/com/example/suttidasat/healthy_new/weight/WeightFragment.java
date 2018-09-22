@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.suttidasat.healthy_new.MenuFragment;
 import com.example.suttidasat.healthy_new.R;
@@ -73,7 +74,7 @@ public class WeightFragment extends Fragment {
 
                 });
         initAddWeightBtn();
-//        initBackMenuBtn();
+        initBackMenuBtn();
 
     }
 
@@ -90,23 +91,31 @@ public class WeightFragment extends Fragment {
 
                         .commit();
 
+                Toast.makeText(getActivity(),"Go To Weight From"
+                        ,Toast.LENGTH_SHORT)
+                        .show();
+
 
             }
         });
     }
-//    void initBackMenuBtn() {
-//        Button _backBtn = (Button) getView().findViewById(R.id.back_to_menu);
-//        _backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.main_view,new MenuFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-//                Log.d("USER", "GOTO MENU");
-//            }
-//        });
-//    }
+    void initBackMenuBtn() {
+        Button _backBtn = (Button) getView().findViewById(R.id.back_to_menu);
+        _backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view,new MenuFragment())
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("USER", "GOTO MENU");
+
+                Toast.makeText(getActivity(),"Go To Menu"
+                        ,Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
 
 }
