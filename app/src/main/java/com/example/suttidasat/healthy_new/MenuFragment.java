@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.suttidasat.healthy_new.Sleep.SleepFormFragment;
+import com.example.suttidasat.healthy_new.Sleep.SleepFragment;
 import com.example.suttidasat.healthy_new.weight.WeightFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,6 +39,7 @@ public class MenuFragment extends Fragment {
 
         _menu.add("BMI");
         _menu.add("Weight");
+        _menu.add("Sleep");
         _menu.add("Sing Out");
 
         final ArrayAdapter<String> _menuAdapter = new ArrayAdapter<>(
@@ -76,7 +79,18 @@ public class MenuFragment extends Fragment {
                     Toast.makeText
                             (getContext(),"GO TO MENU",Toast.LENGTH_SHORT)
                             .show();
-                }else {
+                }else if (_menu.get(i).equals("Sleep")){
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_view, new SleepFragment())
+                            .commit();
+
+                    Log.d("USER", "GOTO Add Sleep");
+                    Toast.makeText
+                            (getContext(),"GOTO Add Sleep",Toast.LENGTH_SHORT)
+                            .show();
+                }
+                else {
                     firebaseAuth.signOut();
 
                     getActivity().getSupportFragmentManager()
