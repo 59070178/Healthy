@@ -43,7 +43,7 @@ public class WeightAdapter extends ArrayAdapter {
         Weight _w = WeightList.get(position);
 
         _shDate.setText(_w.getDate());
-        _shWeight.setText(_w.getWeight()+"    ");
+        _shWeight.setText(_w.getWeight()+" kg.");
 //        _shStatus.setText(_w.getStatus());
 
         if (position > 0) {
