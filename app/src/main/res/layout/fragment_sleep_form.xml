@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="SLEEP FORM"
+        android:textColor="#000000"
+        android:textSize="26dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:padding="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <Button
+                android:text="BACK  "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/back_to_sleepItem"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:hint="วันที่"
+                android:ems="10"
+                android:id="@+id/form_sleep_date" />
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="เวลาเข้านอน"
+                android:ems="10"
+                android:id="@+id/form_sleep_time" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="เวลาตื่นนอน"
+                android:ems="10"
+                android:id="@+id/form_wake_time" />
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:text="SAVE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/record_sleep"
+                />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

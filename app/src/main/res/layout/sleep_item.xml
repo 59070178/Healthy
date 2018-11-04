@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/sleep_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="29-Oct-2018"/>
+
+        <TextView
+            android:id="@+id/amount_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true"
+            android:text="aaaaa"/>
+
+        <TextView
+            android:id="@+id/sleep_wake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_below="@id/sleep_date"
+            android:text="22:00 - 05:30"/>
+
+
+    </RelativeLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
