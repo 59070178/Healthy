@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text=""
-                android:hint="วันที่"
+                android:hint="วันที่  19-Jan-18"
                 android:ems="10"
                 android:id="@+id/form_sleep_date" />
 
@@ -47,14 +46,14 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="เวลาเข้านอน"
+                android:hint="เวลาเข้านอน   22:00"
                 android:ems="10"
                 android:id="@+id/form_sleep_time" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="เวลาตื่นนอน"
+                android:hint="เวลาตื่นนอน    09:00"
                 android:ems="10"
                 android:id="@+id/form_wake_time" />
 
